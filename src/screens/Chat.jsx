@@ -1,10 +1,13 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-
 const Chat = () => {
+  console.log('chat screen rendered');
   return (
-    <View>
-      <Text>Chat Ui</Text>
+    <View style={{
+      flex:1
+    }}>
+      <Text style={{color:'black'}}>Chat Ui</Text>
+      
     </View>
   );
 
