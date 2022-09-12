@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Icons} from '../assets';
 import {Color} from '../theme/color';
+import PopUpMenu from './PopUpMenu';
 
 const Header = ({title = 'sds'}) => {
   return (
@@ -11,9 +12,12 @@ const Header = ({title = 'sds'}) => {
         <TouchableOpacity style={styels.touchContainer} onPress={()=>{}}>
           <Image style={styels.imageStyle} source={Icons.Search} />
         </TouchableOpacity>
-        <TouchableOpacity style={styels.touchContainer}>
+        <View style={styels.touchContainer}>
+          <PopUpMenu/>
+        </View>
+        {/* <TouchableOpacity style={styels.touchContainer}>
           <Image style={styels.imageStyle} source={Icons.More} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         
       </View>
     </View>
