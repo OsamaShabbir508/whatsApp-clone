@@ -2,23 +2,23 @@ import React from 'react';
 import {View, Text,TouchableOpacity,StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Chat = ({type='person'}) => {
+const Chat = ({type='person',name,date,message,onPress}) => {
   return (
-    <TouchableOpacity activeOpacity={.5} style={styles.container}>
+    <TouchableOpacity activeOpacity={.5} style={styles.container} onPress={onPress}>
       <View style={styles.chatIconAndNameContainer}>
         <View style={styles.imageStyle}>
           <Icon name={type} size={35} color='white'/>
         </View>
         <View style={styles.chatNameContainer}>
-          <Text style={styles.chatName}>Dev Stack</Text>
+          <Text style={styles.chatName}>{name}</Text>
           <View style={styles.messageAndTickIconContainer}>
             <Icon name="done-all" size={15} color="black" />
-            <Text style={styles.messageText}>Hello Developer</Text>
+            <Text style={styles.messageText}>{message}</Text>
           </View>
         </View>
       </View>
       <View>
-        <Text style={styles.chatTimeInfo}>18:04</Text>
+        <Text style={styles.chatTimeInfo}>{date}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,7 +27,7 @@ export default Chat;
 const styles = StyleSheet.create({
   container: {
     padding: '2.5%',
-    height: '14%',
+    height: 84,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',

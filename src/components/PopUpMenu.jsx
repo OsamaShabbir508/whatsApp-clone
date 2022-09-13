@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   View,
-  Image,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -9,8 +8,9 @@ import {
   TouchableWithoutFeedback,
   FlatList,
 } from 'react-native';
-import {Icons} from '../assets';
-import {Color} from '../theme/color';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+// import {Icons} from '../assets';
+// import {Color} from '../theme/color';
 const popUpItems = [
   {
     item: 'New group',
@@ -48,7 +48,7 @@ const PopUpMenu = ({}) => {
   return (
     <View>
       <TouchableOpacity onPress={handleModal} style={styels.imageStyle}>
-        <Image style={styels.imageStyle} source={Icons.More} />
+        <Icon name='more-vert' size={25} color='white'/>
       </TouchableOpacity>
       <Modal transparent={true} visible={modal} animationType="none">
         <TouchableOpacity

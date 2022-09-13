@@ -1,28 +1,44 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Icons} from '../assets';
 import {Color} from '../theme/color';
 import PopUpMenu from './PopUpMenu';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Header = ({title = 'sds'}) => {
+const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
+  if (screenName == 'home') {
+    const {title} = data;
+    return (
+      <>
+        <Text style={styels.title}>{title}</Text>
+        <View style={styels.imageContainer}>
+          <TouchableOpacity style={styels.touchContainer} onPress={() => {}}>
+            <Icon name="search" size={25} color="white" />
+          </TouchableOpacity>
+          <View style={styels.touchContainer}>
+            <PopUpMenu />
+          </View>
+        </View>
+      </>
+    );
+  } else if(screenName==='chat') {
+    return(
+      <>
+      <Icon name='arrow-back' size={25} color='white' />
+      </>
+    )
+  }
+};
+const Header = ({screenName = 'home', data = {}}) => {
   return (
     <View style={styels.headerContainer}>
-      <Text style={styels.title}>{title}</Text>
-      <View style={styels.imageContainer}>
-        <TouchableOpacity style={styels.touchContainer} onPress={()=>{}}>
-          <Image style={styels.imageStyle} source={Icons.Search} />
-        </TouchableOpacity>
-        <View style={styels.touchContainer}>
-          <PopUpMenu/>
-        </View>
-        {/* <TouchableOpacity style={styels.touchContainer}>
-          <Image style={styels.imageStyle} source={Icons.More} />
-          </TouchableOpacity> */}
-        
-      </View>
+      {headerBasedOnScreen({
+        screenName,
+        data,
+      })}
     </View>
   );
 };
+
 export default Header;
 const styels = StyleSheet.create({
   headerContainer: {
@@ -42,9 +58,9 @@ const styels = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  touchContainer:{
+  touchContainer: {
     height: '70%',
-    width: '30%'
+    width: '30%',
   },
   imageStyle: {
     height: '100%',

@@ -19,7 +19,9 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState('Chats');
  return (
     <View style={{flex: 1}}>
-      <Header title="WhatsApp" />
+      <Header screenName='home' data={{
+        title:'Whatsapp'
+      }}/>
       <View style={styles.topTabBarContainer}>
         <Tab.Navigator screenOptions={styles.screenOptions} initialRouteName='chats'>
           <Tab.Screen options={{
