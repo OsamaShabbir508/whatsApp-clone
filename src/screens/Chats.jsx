@@ -17,7 +17,9 @@ const ChatScreen = (props) => {
             name={item.name}
             date={item.date}
             message={item.message}
-            onPress={()=>props.navigation.navigate('Chatting')}
+            onPress={()=>props.navigation.navigate('Chatting',{
+              name:item.name
+            })}
           />
         )}
         ItemSeparatorComponent={

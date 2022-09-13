@@ -22,7 +22,7 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
     );
   } else if (screenName === 'chat') {
           
-          const {onBack,popUpMenuItems}=data;
+          const {onBack,popUpMenuItems,name}=data;
     return (
       <>
         <View style={styels.chatHeaderBackAndInfoContainer}>
@@ -33,7 +33,7 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
             <Icon name="person" size={35} color="white" />
           </View>
           <View style={styels.nameAndLastSeenContainer}>
-            <Text style={styels.name}>Saad Ghr</Text>
+            <Text style={styels.name}>{name}</Text>
             <Text style={styels.lastSeenText}>Last seen Today at 10:30</Text>
           </View>
         </View>
