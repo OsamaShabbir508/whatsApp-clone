@@ -1,15 +1,18 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-const Chat = () => {
+import Chat from '../components/Chat';
+const ChatScreen = () => {
   console.log('chat screen rendered');
   return (
     <View style={{
       flex:1
     }}>
-      <Text style={{color:'black'}}>Chat Ui</Text>
+     <Chat/>
+     <Chat/>
+     <Chat/>
       
     </View>
   );
 
 };
-export default Chat;
+export default ChatScreen;

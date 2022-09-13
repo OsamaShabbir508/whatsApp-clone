@@ -3,7 +3,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Header from '../components/Header';
 import {Color} from '../theme/color';
-import Chat from './Chat';
+import ChatScreen from './Chats';
 import Call from './Call';
 import Status from './Status';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -21,12 +21,12 @@ const Home = () => {
     <View style={{flex: 1}}>
       <Header title="WhatsApp" />
       <View style={styles.topTabBarContainer}>
-        <Tab.Navigator screenOptions={styles.screenOptions} initialRouteName='CHATS'>
+        <Tab.Navigator screenOptions={styles.screenOptions} initialRouteName='chats'>
           <Tab.Screen options={{
             tabBarShowIcon:true,
             tabBarShowLabel:false,
             tabBarIcon:({focus})=>{return <Icon name='photo-camera' size={22} color={'white'}/>}
-          }} name='cam' component={Chat} />
+          }} name='cam' component={ChatScreen} />
           <Tab.Screen
             listeners={{
               focus: () => {
@@ -34,7 +34,7 @@ const Home = () => {
               },
             }}
             name="chats"
-            component={Chat}
+            component={ChatScreen}
           />
           <Tab.Screen
             listeners={{
