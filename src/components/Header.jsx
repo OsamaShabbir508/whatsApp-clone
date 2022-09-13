@@ -5,7 +5,7 @@ import PopUpMenu from './PopUpMenu';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
-  if (screenName == 'home') {
+  if (screenName === 'home') {
     const {title} = data;
     return (
       <>
@@ -20,12 +20,34 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
         </View>
       </>
     );
-  } else if(screenName==='chat') {
-    return(
+  } else if (screenName === 'chat') {
+          
+          const {onBack,popUpMenuItems}=data;
+    return (
       <>
-      <Icon name='arrow-back' size={25} color='white' />
+        <View style={styels.chatHeaderBackAndInfoContainer}>
+          <TouchableOpacity onPress={onBack}>
+            <Icon name="arrow-back" size={25} color="white" />
+          </TouchableOpacity>
+          <View style={styels.profileImageContainer}>
+            <Icon name="person" size={35} color="white" />
+          </View>
+          <View style={styels.nameAndLastSeenContainer}>
+            <Text style={styels.name}>Saad Ghr</Text>
+            <Text style={styels.lastSeenText}>Last seen Today at 10:30</Text>
+          </View>
+        </View>
+        <View style={styels.callAndVideoIconContainer}>
+          <TouchableOpacity>
+            <Icon name="videocam" size={23} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="call" size={20} color="white" />
+          </TouchableOpacity>
+          <PopUpMenu popUpMenuItems={popUpMenuItems}  />
+        </View>
       </>
-    )
+    );
   }
 };
 const Header = ({screenName = 'home', data = {}}) => {
@@ -43,8 +65,8 @@ export default Header;
 const styels = StyleSheet.create({
   headerContainer: {
     backgroundColor: Color.green,
-    padding: 10,
-    height: '10%',
+    padding: 8,
+    height: '9%',
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -65,5 +87,37 @@ const styels = StyleSheet.create({
   imageStyle: {
     height: '100%',
     width: '100%',
+  },
+  //chat
+  chatHeaderBackAndInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    // backgroundColor:'red'
+  },
+  profileImageContainer: {
+    padding: 6,
+    backgroundColor: 'gray',
+    borderRadius: 40,
+    marginLeft: 3,
+    opacity: 0.8,
+  },
+  nameAndLastSeenContainer: {
+    flexDirection: 'column',
+    marginLeft: 5,
+    justifyContent: 'space-evenly',
+    height: '100%',
+  },
+  name: {color: 'white', fontWeight: '700', fontSize: 16},
+  lastSeenText: {
+    color: Color.white,
+    fontSize: 10,
+  },
+  callAndVideoIconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 0.8,
   },
 });
