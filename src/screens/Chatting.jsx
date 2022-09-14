@@ -21,8 +21,8 @@ const Chatting = ({navigation, route}) => {
   const {name} = route.params;
   const [contentSize, setContentSize] = useState(0);
   const [onFocusAndBlur, setOnFocusAndBlur] = useState(false);
-  const [showAattachment,setShowAttachment]=useState(false)
- const handleAttachmentModal=()=>setShowAttachment(!showAattachment)
+  const [showAattachment, setShowAttachment] = useState(false);
+  const handleAttachmentModal = () => setShowAttachment(!showAattachment);
 
   const goBack = () => {
     navigation.goBack();
@@ -73,7 +73,10 @@ const Chatting = ({navigation, route}) => {
                 {height: Math.max(55, contentSize)},
               ]}
             />
-            <TouchableOpacity onPress={handleAttachmentModal} activeOpacity={0.8} style={styles.suffixIcon}>
+            <TouchableOpacity
+              onPress={handleAttachmentModal}
+              activeOpacity={0.8}
+              style={styles.suffixIcon}>
               <Icon name="attach-file" size={25} color={Color.grayCloud} />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={styles.suffixIcon}>
@@ -85,70 +88,68 @@ const Chatting = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <SelectAttachment onPress={handleAttachmentModal} showAattachment={showAattachment}/>
+      <SelectAttachment
+        onPress={handleAttachmentModal}
+        showAattachment={showAattachment}
+      />
     </View>
   );
 };
-const SelectAttachment = ({onPress,showAattachment}) => {
-  
+const SelectAttachment = ({onPress, showAattachment}) => {
   return (
     <Modal transparent={true} visible={showAattachment}>
-      <TouchableOpacity activeOpacity={.8} onPress={onPress} style={{height: '100%', width: '100%'}}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={onPress}
+        style={styles.selectAttachmentModalContainer}>
         <TouchableOpacity
-          activeOpacity={.9}
-          style={{
-            position: 'absolute',
-            bottom: '9%',
-            width: '95%',
-            borderRadius:20,
-            backgroundColor:'white',
-            height: '35%',
-            alignSelf:'center',
-            flexDirection:'row',
-            justifyContent:'space-around',
-            flexWrap:'wrap',
-            
-            padding:20
-          }}>
-            <AttachmentOptions backgroundColor={'#6A0DAD'} iconName={'file-copy'} title='Document'/>
-            <AttachmentOptions backgroundColor={'#F67280'} iconName={'camera-alt'} title='Document'/>
-            <AttachmentOptions backgroundColor={'purple'} iconName={'image'} title='Document'/>
-            <AttachmentOptions backgroundColor={'orange'} iconName={'headset'} title='Document'/>
-            <AttachmentOptions backgroundColor={'#00A36C'} iconName={'location-pin'} title='Document'/>
-            <AttachmentOptions backgroundColor={'#1589FF'} iconName={'person'} title='Document'/>
-          </TouchableOpacity>
+          activeOpacity={0.9}
+          style={styles.selectModalBottomViewContainer}>
+          <AttachmentOptions
+            backgroundColor={'#6A0DAD'}
+            iconName={'file-copy'}
+            title="Document"
+          />
+          <AttachmentOptions
+            backgroundColor={'#F67280'}
+            iconName={'camera-alt'}
+            title="Document"
+          />
+          <AttachmentOptions
+            backgroundColor={'purple'}
+            iconName={'image'}
+            title="Document"
+          />
+          <AttachmentOptions
+            backgroundColor={'orange'}
+            iconName={'headset'}
+            title="Document"
+          />
+          <AttachmentOptions
+            backgroundColor={'#00A36C'}
+            iconName={'location-pin'}
+            title="Document"
+          />
+          <AttachmentOptions
+            backgroundColor={'#1589FF'}
+            iconName={'person'}
+            title="Document"
+          />
+        </TouchableOpacity>
       </TouchableOpacity>
     </Modal>
   );
 };
-const AttachmentOptions=({backgroundColor,iconName,title})=>{
-  return(
-    <View style={{
-      justifyContent:'center',
-      margin:'5%',
-      //alignItems:'center'
-    }}>
-    <TouchableOpacity activeOpacity={.7} style={{
-      padding:12,
-      backgroundColor:`${backgroundColor}`,
-      justifyContent:'center',
-      width:50,
-      borderRadius:60,
-
-      alignItems:'center'
-    }}>
-      <Icon
-      name={`${iconName}`}
-      size={25}
-      color='white'
-      />
-      
-
-    </TouchableOpacity>
-    <Text style={{color:'gray',marginTop:2,fontSize:13}}>{title}</Text>
+const AttachmentOptions = ({backgroundColor, iconName, title}) => {
+  return (
+    <View style={styles.attachmentOptionsContainer}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.attachmentIcon}>
+        <Icon name={`${iconName}`} size={25} color="white" />
+      </TouchableOpacity>
+      <Text style={styles.attachmentText}>{title}</Text>
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   inputTextContainer: {
     position: 'absolute',
@@ -202,6 +203,43 @@ const styles = StyleSheet.create({
     // height:30,
     // width:30,
     //flex:.16
+  },
+  attachmentOptionsContainer: {
+    justifyContent: 'center',
+    margin: '5%',
+    //alignItems:'center'
+  },
+  attachmentIcon: {
+    padding: 12,
+    backgroundColor: `${backgroundColor}`,
+    justifyContent: 'center',
+    width: 50,
+    borderRadius: 60,
+
+    alignItems: 'center',
+  },
+  attachmentText: {
+    color: 'gray',
+    marginTop: 2,
+    fontSize: 13,
+  },
+  selectAttachmentModalContainer: {
+    height: '100%',
+    width: '100%',
+  },
+  selectModalBottomViewContainer: {
+    position: 'absolute',
+    bottom: '9%',
+    width: '95%',
+    borderRadius: 20,
+    backgroundColor: 'white',
+    height: '35%',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+
+    padding: 20,
   },
 });
 const popUpItems = [

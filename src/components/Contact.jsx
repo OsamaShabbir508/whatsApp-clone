@@ -1,29 +1,23 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Color } from '../theme/color';
+import {Color} from '../theme/color';
 
-const Contact = ({iconName='person', iconBackGroundColor = Color.grayCloud,title='Test',subTitle='Hey there! I am using WhatsApp'}) => {
+const Contact = ({
+  iconName = 'person',
+  iconBackGroundColor = Color.grayCloud,
+  title = 'Test',
+  subTitle = 'Hey there! I am using WhatsApp',
+}) => {
   return (
     <View style={styles.mainContainer}>
-      <View
-        style={{
-          backgroundColor: `${iconBackGroundColor}`,
-          padding: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 40,
-        }}>
+      <View style={[styles.profileIconContainer,{backgroundColor: `${iconBackGroundColor}`}]}>
         <Icon name={iconName} size={25} color="white" />
       </View>
-       <View style={{
-        marginLeft:12,
-        flexDirection:'column',
-        justifyContent:'center',
-       }}>
-        <Text style={{color:'black',fontSize:17,fontWeight:'700'}}>{title}</Text>
-     {subTitle &&<Text style={{color:'gray',opacity:.6,fontSize:12,fontWeight:'500'}}>{subTitle}</Text>}
-       </View>
+      <View style={styles.detailContainer}>
+        <Text style={styles.title}>{title}</Text>
+        {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
+      </View>
     </View>
   );
 };
@@ -37,4 +31,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     //backgroundColor:'red'
   },
+  profileIconContainer: {
+  
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 40,
+  },
+  detailContainer: {
+    marginLeft: 12,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  title: {color: 'black', fontSize: 17, fontWeight: '700'},
+  subTitle: {color: 'gray', opacity: 0.6, fontSize: 12, fontWeight: '500'},
 });
