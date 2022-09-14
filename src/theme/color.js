@@ -4,5 +4,6 @@ accent:'#FF128C7E',
 //green:'#128C7E',
 green:'#075E54',
 white:'#ECE5DD',
+grayCloud:'#B6B6B4'
 
 }

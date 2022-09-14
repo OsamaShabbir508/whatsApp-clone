@@ -1,5 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Chatting from '../screens/Chatting';
+import Contacts from '../screens/Contacts';
 import Home from '../screens/Home';
 
 const Stack = createNativeStackNavigator();
@@ -11,6 +12,7 @@ const HomeStack = () => {
     }}> 
       <Stack.Screen  name="Home" component={Home} />
       <Stack.Screen name="Chatting" component={Chatting} />
+      <Stack.Screen name='Contacts' component={Contacts}/>
     </Stack.Navigator>
   );
 };

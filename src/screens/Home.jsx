@@ -13,10 +13,21 @@ const activeFloatingIcon = {
   Chats: 'chat',
   Status: 'photo-camera',
   Calls: 'add-call',
+  
 };
-const Home = () => {
+const Home = ({navigation}) => {
+
   console.log('Home screen rendered');
   const [activeTab, setActiveTab] = useState('Chats');
+  const handleFLoatingButtonPress=({activeScreen})=>{
+    console.log(activeScreen);
+    if (activeScreen==='Chats') {
+      navigation.navigate('Contacts')
+    }
+    else if(activeScreen==='photo-camera') {
+
+    }
+  }
  return (
     <View style={{flex: 1}}>
       <Header screenName='home' data={{
@@ -57,7 +68,7 @@ const Home = () => {
             component={Call}
           />
         </Tab.Navigator>
-        <TouchableOpacity  activeOpacity={.6} style={styles.floatingContainer}>
+        <TouchableOpacity onPress={()=>handleFLoatingButtonPress({activeScreen:activeTab})} activeOpacity={.6} style={styles.floatingContainer}>
          
           <Icon
             name={activeFloatingIcon[activeTab]}

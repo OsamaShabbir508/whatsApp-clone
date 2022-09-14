@@ -21,8 +21,7 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
       </>
     );
   } else if (screenName === 'chat') {
-          
-          const {onBack,popUpMenuItems,name}=data;
+    const {onBack, popUpMenuItems, name} = data;
     return (
       <>
         <View style={styels.chatHeaderBackAndInfoContainer}>
@@ -44,7 +43,35 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
           <TouchableOpacity>
             <Icon name="call" size={20} color="white" />
           </TouchableOpacity>
-          <PopUpMenu popUpMenuItems={popUpMenuItems}  />
+          <PopUpMenu popUpMenuItems={popUpMenuItems} />
+        </View>
+      </>
+    );
+  } else if (screenName === 'contacts') {
+    //  const {onBack,popUpMenuItems,name}=data;
+     const {onBack}=data;
+    
+    return (
+      <>
+        <View style={{
+        //  backgroundColor:'red',
+          flexDirection:'row',
+          padding:5,
+          flex:.65,
+          justifyContent:'space-between'
+        }}>
+          <TouchableOpacity activeOpacity={.8} onPress={onBack}>
+        <Icon name="arrow-back" size={25} color="white" />
+        </TouchableOpacity>
+        <Text style={[styels.title,{fontWeight:'700',fontSize:18}]}>{'Select contacts'}</Text>
+        </View>
+        <View style={styels.imageContainer}>
+          <TouchableOpacity style={styels.touchContainer} onPress={() => {}}>
+            <Icon name="search" size={25} color="white" />
+          </TouchableOpacity>
+          <View style={styels.touchContainer}>
+            <PopUpMenu />
+          </View>
         </View>
       </>
     );
@@ -66,7 +93,7 @@ const styels = StyleSheet.create({
   headerContainer: {
     backgroundColor: Color.green,
     padding: 8,
-    height: '9%',
+    height: 70,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
