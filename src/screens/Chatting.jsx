@@ -143,7 +143,7 @@ const SelectAttachment = ({onPress, showAattachment}) => {
 const AttachmentOptions = ({backgroundColor, iconName, title}) => {
   return (
     <View style={styles.attachmentOptionsContainer}>
-      <TouchableOpacity activeOpacity={0.7} style={styles.attachmentIcon}>
+      <TouchableOpacity activeOpacity={0.7} style={[styles.attachmentIcon,{  backgroundColor: `${backgroundColor}`,}]}>
         <Icon name={`${iconName}`} size={25} color="white" />
       </TouchableOpacity>
       <Text style={styles.attachmentText}>{title}</Text>
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
   },
   attachmentIcon: {
     padding: 12,
-    backgroundColor: `${backgroundColor}`,
     justifyContent: 'center',
     width: 50,
     borderRadius: 60,

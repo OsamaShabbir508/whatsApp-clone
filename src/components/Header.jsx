@@ -49,21 +49,24 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
     );
   } else if (screenName === 'contacts') {
     //  const {onBack,popUpMenuItems,name}=data;
-     const {onBack}=data;
-    
+    const {onBack} = data;
+
     return (
       <>
-        <View style={{
-        //  backgroundColor:'red',
-          flexDirection:'row',
-          padding:5,
-          flex:.65,
-          justifyContent:'space-between'
-        }}>
-          <TouchableOpacity activeOpacity={.8} onPress={onBack}>
-        <Icon name="arrow-back" size={25} color="white" />
-        </TouchableOpacity>
-        <Text style={[styels.title,{fontWeight:'700',fontSize:18}]}>{'Select contacts'}</Text>
+        <View
+          style={{
+            //  backgroundColor:'red',
+            flexDirection: 'row',
+            padding: 5,
+            flex: 0.65,
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity activeOpacity={0.8} onPress={onBack}>
+            <Icon name="arrow-back" size={25} color="white" />
+          </TouchableOpacity>
+          <Text style={[styels.title, {fontWeight: '700', fontSize: 18}]}>
+            {'Select contacts'}
+          </Text>
         </View>
         <View style={styels.imageContainer}>
           <TouchableOpacity style={styels.touchContainer} onPress={() => {}}>
@@ -72,6 +75,41 @@ const headerBasedOnScreen = ({screenName = 'home', data = {}}) => {
           <View style={styels.touchContainer}>
             <PopUpMenu />
           </View>
+        </View>
+      </>
+    );
+  } else if (screenName === 'addContact') {
+    //  const {onBack,popUpMenuItems,name}=data;
+    const {onBack,title,subTitle} = data;
+
+    return (
+      <>
+        <View
+          style={{
+            flexDirection: 'row',
+            padding: 5,
+            flex: 0.45,
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity activeOpacity={0.8} onPress={onBack}>
+            <Icon name="arrow-back" size={25} color="white" />
+          </TouchableOpacity>
+          <View>
+          <Text style={[styels.title, {fontWeight: '700', fontSize: 18}]}>
+            {title}
+          </Text>
+          <Text style={[styels.title, {fontWeight: '400', fontSize: 12}]}>
+            {subTitle}
+          </Text>
+          </View>
+        </View>
+        <View style={styels.imageContainer}>
+          <TouchableOpacity style={styels.touchContainer} onPress={() => {}}>
+            <Icon name="search" size={25} color="white" />
+          </TouchableOpacity>
+          {/* <View style={styels.touchContainer}>
+            <PopUpMenu />
+          </View> */}
         </View>
       </>
     );
