@@ -7,10 +7,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const NewGroup = ({navigation}) => {
   const [participants, setParticipants] = useState(contact_List);
    const onBack=()=>navigation.goBack()
-  const toogleAddParticipant = index => {
+  const toogleAddParticipant = id => {
+    const index= participants.findIndex((part)=>part.id==id);
     participants[index].isSelected = !participants[index].isSelected;
     setParticipants([...participants]);
   };
+  const removeParticipant=(id)=>{
+   const index= participants.findIndex((part)=>part.id==id);
+   participants[index].isSelected = !participants[index].isSelected;
+   setParticipants([...participants]);
+
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -35,6 +42,7 @@ const NewGroup = ({navigation}) => {
             isSelected={item.isSelected}
             title={item.title}
             selectedParticipant={true}
+            id={item.id}
           />
         )}
       />
@@ -47,6 +55,7 @@ const NewGroup = ({navigation}) => {
             onPress={toogleAddParticipant}
             isSelected={item.isSelected}
             title={item.title}
+            id={item.id}
             selectionList={true}
           />
         )}
@@ -64,12 +73,13 @@ const Participants = ({
   title = 'Test',
   subTitle = 'Hey there! I am using WhatsApp',
   selectionList,
-  selectedParticipant
+  selectedParticipant,
+  id
 }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      onPress={() => onPress(index)}
+      onPress={() => onPress(id)}
       style={[styles.participantMainContainer,{width:selectionList?'100%':70}]}>
       <View
         style={[
@@ -122,98 +132,99 @@ const styles = StyleSheet.create({
 });
 const contact_List = [
   {
+    id:'1',
     title: 'Saad Ahmd',
     isSelected: false,
   },
-  {
+  { id:'2',
     title: 'Huzaifa Coa',
     isSelected: true,
   },
-  {
+  { id:'3',
     title: 'Hassan ahmed',
     isSelected: false,
   },
-  {
+  { id:'4',
     title: 'Asif ahmed',
     isSelected: false,
   },
-  {
+  { id:'5',
     title: 'Ather te',
     isSelected: false,
   },
-  {
+  { id:'6',
     title: 'Shuja',
     isSelected: false,
   },
-  {
+  { id:'7',
     title: 'Ahmed',
     isSelected: false,
   },
-  {
+  { id:'8',
     title: 'Salman',
     isSelected: false,
   },
-  {
+  { id:'9',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'10',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'11',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'12',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'13',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'14',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'15',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'16',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'17',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'18',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'19',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'20',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'21',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'22',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'23',
     title: 'Osama Ahmed',
     isSelected: false,
   },
-  {
+  { id:'24',
     title: 'Osama Ahmed',
     isSelected: false,
   },

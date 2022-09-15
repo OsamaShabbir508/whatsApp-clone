@@ -5,13 +5,17 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ImageBackground,
   Text,
   View,
   Modal,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../components/Header';
 import {Color} from '../theme/color';
+import {Icons} from '../assets';
+import Message from '../components/Message';
 
 const textInputDetail = {
   contentSize: 0,
@@ -50,43 +54,58 @@ const Chatting = ({navigation, route}) => {
       <View
         style={{
           flex: 1,
-          //  backgroundColor: 'blue',
         }}>
-        <View style={styles.inputTextContainer}>
-          <View style={styles.inputPrefixIconAndTextInputContainer}>
-            <TouchableOpacity style={styles.inputPrefixIcon}>
-              <Icon name="emoji-emotions" size={28} color={Color.grayCloud} />
-            </TouchableOpacity>
-            <TextInput
-              numberOfLines={3}
-              onContentSizeChange={onContentSizeChanges}
-              multiline={true}
-              placeholder="Message"
-              placeholderTextColor={'black'}
-              onFocus={e => {
-                console.log('focused');
-              }}
-              on={() => console.log('unfocused')}
-              // onBlur={()=>{console.log('blured');}}
-              style={[
-                styles.textInputStyle,
-                {height: Math.max(55, contentSize)},
-              ]}
-            />
-            <TouchableOpacity
-              onPress={handleAttachmentModal}
-              activeOpacity={0.8}
-              style={styles.suffixIcon}>
-              <Icon name="attach-file" size={25} color={Color.grayCloud} />
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={styles.suffixIcon}>
-              <Icon name="camera-alt" size={25} color={Color.grayCloud} />
+        <ImageBackground
+          style={{flex: 1, padding: 10}}
+          resizeMode="cover"
+          source={Icons.ChatBackground}>
+          <FlatList
+            data={messages}
+            style={{
+              marginBottom:9
+            }}
+            renderItem={({item}) => <Message own={item.own} text={item.mes} />}
+          />
+
+          <View
+            style={[
+              styles.inputTextContainer,messages.length===0&&
+              {position: 'absolute'},
+            ]}>
+            <View style={styles.inputPrefixIconAndTextInputContainer}>
+              <TouchableOpacity style={styles.inputPrefixIcon}>
+                <Icon name="emoji-emotions" size={25} color={Color.grayCloud} />
+              </TouchableOpacity>
+              <TextInput
+                numberOfLines={3}
+                onContentSizeChange={onContentSizeChanges}
+                multiline={true}
+                placeholder="Message"
+                placeholderTextColor={'black'}
+                onFocus={e => {
+                  console.log('focused');
+                }}
+                on={() => console.log('unfocused')}
+                style={[
+                  styles.textInputStyle,
+                  {height: Math.max(55, contentSize)},
+                ]}
+              />
+              <TouchableOpacity
+                onPress={handleAttachmentModal}
+                activeOpacity={0.8}
+                style={styles.suffixIcon}>
+                <Icon name="attach-file" size={25} color={Color.grayCloud} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.8} style={styles.suffixIcon}>
+                <Icon name="camera-alt" size={25} color={Color.grayCloud} />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity activeOpacity={0.8} style={styles.micContainer}>
+              <Icon name="mic" size={25} color="white" />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity activeOpacity={0.8} style={styles.micContainer}>
-            <Icon name="mic" size={25} color="white" />
-          </TouchableOpacity>
-        </View>
+        </ImageBackground>
       </View>
       <SelectAttachment
         onPress={handleAttachmentModal}
@@ -143,7 +162,12 @@ const SelectAttachment = ({onPress, showAattachment}) => {
 const AttachmentOptions = ({backgroundColor, iconName, title}) => {
   return (
     <View style={styles.attachmentOptionsContainer}>
-      <TouchableOpacity activeOpacity={0.7} style={[styles.attachmentIcon,{  backgroundColor: `${backgroundColor}`,}]}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={[
+          styles.attachmentIcon,
+          {backgroundColor: `${backgroundColor}`},
+        ]}>
         <Icon name={`${iconName}`} size={25} color="white" />
       </TouchableOpacity>
       <Text style={styles.attachmentText}>{title}</Text>
@@ -152,7 +176,7 @@ const AttachmentOptions = ({backgroundColor, iconName, title}) => {
 };
 const styles = StyleSheet.create({
   inputTextContainer: {
-    position: 'absolute',
+    // position: 'absolute',
     bottom: 5,
     width: '95%',
     alignSelf: 'center',
@@ -257,6 +281,72 @@ const popUpItems = [
   {
     item: 'Wallpaper',
     onTap: () => alert('Wallpaper'),
+  },
+];
+const messages = [
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: false,
+    mes: 'Nothind have youd done that?',
+  },
+  {
+    own: true,
+    mes: 'Yeterday I was busu in house chores and was doing notng just having a normal day.',
+  },
+  {
+    own: false,
+    mes: ' Yeterday I was busu in house chores and was doing . Yeterday I was busu in house chores and was doing notng just having a normal day.',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
+  },
+  {
+    own: true,
+    mes: 'Hey whats app dong?',
   },
 ];
 export default Chatting;

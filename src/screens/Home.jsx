@@ -1,45 +1,80 @@
 import React, {useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  BackHandler,
+} from 'react-native';
+import {TabActions} from '@react-navigation/native';
 import Header from '../components/Header';
 import {Color} from '../theme/color';
 import ChatScreen from './Chats';
 import Call from './Call';
 import Status from './Status';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {launchCamera} from 'react-native-image-picker';
+import Camera from './Camera';
 
 const Tab = createMaterialTopTabNavigator();
 const activeFloatingIcon = {
   Chats: 'chat',
   Status: 'photo-camera',
   Calls: 'add-call',
-  
 };
 const Home = ({navigation}) => {
-
   console.log('Home screen rendered');
   const [activeTab, setActiveTab] = useState('Chats');
-  const handleFLoatingButtonPress=({activeScreen})=>{
+  const handleFLoatingButtonPress = ({activeScreen}) => {
     console.log(activeScreen);
-    if (activeScreen==='Chats') {
-      navigation.navigate('Contacts')
+    if (activeScreen === 'Chats') {
+      navigation.navigate('Contacts');
+    } else if (activeScreen === 'photo-camera') {
     }
-    else if(activeScreen==='photo-camera') {
-
+  };
+  const CameraView = () => null;
+  const openCamera = async () => {
+    try {
+      const res = await launchCamera({
+        presentationStyle: 'fullScreen',
+        mediaType: 'photo',
+      });
+      const jumpToAction = TabActions.jumpTo('chats');
+      navigation.dispatch(jumpToAction);
+    } catch (error) {
+      const jumpToAction = TabActions.jumpTo('chats');
+      navigation.dispatch(jumpToAction);
     }
-  }
- return (
+  };
+  return (
     <View style={{flex: 1}}>
-      <Header screenName='home' data={{
-        title:'Whatsapp'
-      }}/>
+      <Header
+        screenName="home"
+        data={{
+          title: 'Whatsapp',
+        }}
+      />
       <View style={styles.topTabBarContainer}>
-        <Tab.Navigator screenOptions={styles.screenOptions} initialRouteName='chats'>
-          <Tab.Screen options={{
-            tabBarShowIcon:true,
-            tabBarShowLabel:false,
-            tabBarIcon:({focus})=>{return <Icon name='photo-camera' size={22} color={'white'}/>}
-          }} name='cam' component={ChatScreen} />
+        <Tab.Navigator
+          screenOptions={styles.screenOptions}
+          initialRouteName="chats">
+          <Tab.Screen
+
+            options={{
+              tabBarShowIcon: true,
+              tabBarShowLabel: false,
+              tabBarIcon: ({focus}) => {
+                return <Icon name="photo-camera" size={22} color={'white'} />;
+              },
+            }}
+            listeners={{
+              // tabPress:
+              focus: openCamera,
+            }}
+            name="cam"
+            component={CameraView}
+          />
           <Tab.Screen
             listeners={{
               focus: () => {
@@ -68,8 +103,10 @@ const Home = ({navigation}) => {
             component={Call}
           />
         </Tab.Navigator>
-        <TouchableOpacity onPress={()=>handleFLoatingButtonPress({activeScreen:activeTab})} activeOpacity={.6} style={styles.floatingContainer}>
-         
+        <TouchableOpacity
+          onPress={() => handleFLoatingButtonPress({activeScreen: activeTab})}
+          activeOpacity={0.6}
+          style={styles.floatingContainer}>
           <Icon
             name={activeFloatingIcon[activeTab]}
             size={25}
@@ -99,7 +136,7 @@ const styles = StyleSheet.create({
     },
     tabBarStyle: {backgroundColor: Color.green},
   },
-  floatingContainer:{
+  floatingContainer: {
     bottom: 30,
     right: 25,
     backgroundColor: Color.green,
@@ -108,6 +145,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    elevation:10
-  }
+    elevation: 10,
+  },
 });
