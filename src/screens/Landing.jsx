@@ -6,7 +6,6 @@ import {Contacts} from '../dummy_data';
 const LandingPage = ({navigation}) => {
   const selectUser = index => {
     const selectedUser = Contacts.splice(index, 1);
-    console.log(navigation);
     navigation.replace('Home', {
       selectedUser: selectedUser[0],
     });

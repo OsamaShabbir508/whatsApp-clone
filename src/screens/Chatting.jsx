@@ -1,7 +1,6 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Keyboard,
   TextInput,
   TouchableOpacity,
   ImageBackground,
@@ -15,55 +14,43 @@ import Header from '../components/Header';
 import {Color} from '../theme/color';
 import {Icons} from '../assets';
 import Message from '../components/Message';
-import {io} from 'socket.io-client';
-import Socket from '../socket'
+import Socket from '../socket';
 
 const textInputDetail = {
   contentSize: 0,
   onFocus: false,
 };
-const socket=new Socket()
+const socket = new Socket();
 
 const Chatting = ({navigation, route}) => {
-  
-  
   const {name, item, selectedUser} = route.params;
   const [contentSize, setContentSize] = useState(0);
   const [showAattachment, setShowAttachment] = useState(false);
   const [isText, setIsText] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  
 
   useEffect(() => {
-     
     socket.initializeSocket(selectedUser.id);
     return () => {
       socket.disconnectSocket();
     };
   }, []);
-  socket.on(({message})=>{
-    console.log('from  screen on ',message,selectedUser.name,item.name);
-        setMessages([...messages, {own: false, message:message}]);
-  })
-  // useEffect(() => {
-  //      //console.log(messages,'from messages');
-  //   socket.on(({message}) => {
-  //     console.log('screen update',messages.length,);
-  //    // console.log('message from socket',message,'i am ',selectedUser.name,'client is',item,messages);
-  //     setMessages([...messages, {own: false, message:message}]);
-  //   });
-  // }, []);
-   const sendMessage=() => {
+
+  socket.on(({message}) => {
+    setMessages([...messages, {own: false, message: message}]);
+  });
+
+  const sendMessage = () => {
     socket.emit('message', {
       message: message,
       socketId: selectedUser.id,
       targetId: item.id,
     });
     setMessages([...messages, {own: true, message: message}]);
-    console.log('from send message');
     setMessage('');
-  }
+  };
+
   const handleAttachmentModal = () => setShowAttachment(!showAattachment);
   const goBack = () => {
     navigation.goBack();
@@ -76,6 +63,7 @@ const Chatting = ({navigation, route}) => {
     event.nativeEvent.contentSize.height < 120 &&
       setContentSize(event.nativeEvent.contentSize.height);
   };
+
   return (
     <View style={{flex: 1}}>
       <Header
@@ -99,7 +87,9 @@ const Chatting = ({navigation, route}) => {
             style={{
               marginBottom: 9,
             }}
-            renderItem={({item}) => <Message own={item.own} text={item.message} />}
+            renderItem={({item}) => (
+              <Message own={item.own} text={item.message} />
+            )}
           />
 
           <View
@@ -123,10 +113,6 @@ const Chatting = ({navigation, route}) => {
                   setMessage(val);
                 }}
                 value={message}
-                onFocus={e => {
-                  console.log('focused');
-                }}
-                on={() => console.log('unfocused')}
                 style={[
                   styles.textInputStyle,
                   {height: Math.max(55, contentSize)},

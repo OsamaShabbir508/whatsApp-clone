@@ -5,26 +5,29 @@ import Header from '../components/Header';
 
 const Contacts = ({navigation}) => {
   return (
-    <View >
-      <Header screenName="contacts" data={{onBack: () => {navigation.goBack()}}} />
-      <TouchableOpacity onPress={()=>navigation.navigate('Newgroup')}>
-      <Contact 
-    iconName= 'group'
-    iconBackGroundColor='#00A36C'
-    title='New group'
-    subTitle= ''
-  />
-  </TouchableOpacity>
-    <Contact 
-    iconBackGroundColor='#00A36C'
-    title='New contacts'
-    subTitle= ''
-  />
-
-       <FlatList
-          data={contact_List}
-          renderItem={({item, index}) => <Contact{...item} />}
+    <View>
+      <Header
+        screenName="contacts"
+        data={{
+          onBack: () => {
+            navigation.goBack();
+          },
+        }}
+      />
+      <TouchableOpacity onPress={() => navigation.navigate('Newgroup')}>
+        <Contact
+          iconName="group"
+          iconBackGroundColor="#00A36C"
+          title="New group"
+          subTitle=""
         />
+      </TouchableOpacity>
+      <Contact iconBackGroundColor="#00A36C" title="New contacts" subTitle="" />
+
+      <FlatList
+        data={contact_List}
+        renderItem={({item, index}) => <Contact {...item} />}
+      />
     </View>
   );
 };
