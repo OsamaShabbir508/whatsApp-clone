@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   StyleSheet,
   Keyboard,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   ImageBackground,
   Text,
   View,
@@ -16,24 +15,60 @@ import Header from '../components/Header';
 import {Color} from '../theme/color';
 import {Icons} from '../assets';
 import Message from '../components/Message';
+import {io} from 'socket.io-client';
+import Socket from '../socket'
 
 const textInputDetail = {
   contentSize: 0,
   onFocus: false,
 };
-const Chatting = ({navigation, route}) => {
-  const {name} = route.params;
-  const [contentSize, setContentSize] = useState(0);
-  const [onFocusAndBlur, setOnFocusAndBlur] = useState(false);
-  const [showAattachment, setShowAttachment] = useState(false);
-  const handleAttachmentModal = () => setShowAttachment(!showAattachment);
+const socket=new Socket()
 
+const Chatting = ({navigation, route}) => {
+  
+  
+  const {name, item, selectedUser} = route.params;
+  const [contentSize, setContentSize] = useState(0);
+  const [showAattachment, setShowAttachment] = useState(false);
+  const [isText, setIsText] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  
+
+  useEffect(() => {
+     
+    socket.initializeSocket(selectedUser.id);
+    return () => {
+      socket.disconnectSocket();
+    };
+  }, []);
+  socket.on(({message})=>{
+    console.log('from  screen on ',message,selectedUser.name,item.name);
+        setMessages([...messages, {own: false, message:message}]);
+  })
+  // useEffect(() => {
+  //      //console.log(messages,'from messages');
+  //   socket.on(({message}) => {
+  //     console.log('screen update',messages.length,);
+  //    // console.log('message from socket',message,'i am ',selectedUser.name,'client is',item,messages);
+  //     setMessages([...messages, {own: false, message:message}]);
+  //   });
+  // }, []);
+   const sendMessage=() => {
+    socket.emit('message', {
+      message: message,
+      socketId: selectedUser.id,
+      targetId: item.id,
+    });
+    setMessages([...messages, {own: true, message: message}]);
+    console.log('from send message');
+    setMessage('');
+  }
+  const handleAttachmentModal = () => setShowAttachment(!showAattachment);
   const goBack = () => {
     navigation.goBack();
   };
-  const onFocusandBlur = event => {
-    setTextInputdetails(prevValues => ({...prevValues, onFocus: ''}));
-  };
+
   const onContentSizeChanges = event => {
     120 > contentSize &&
       contentSize < 120 &&
@@ -62,19 +97,19 @@ const Chatting = ({navigation, route}) => {
           <FlatList
             data={messages}
             style={{
-              marginBottom:9
+              marginBottom: 9,
             }}
-            renderItem={({item}) => <Message own={item.own} text={item.mes} />}
+            renderItem={({item}) => <Message own={item.own} text={item.message} />}
           />
 
           <View
             style={[
-              styles.inputTextContainer,messages.length===0&&
-              {position: 'absolute'},
+              styles.inputTextContainer,
+              messages.length === 0 && {position: 'absolute'},
             ]}>
             <View style={styles.inputPrefixIconAndTextInputContainer}>
               <TouchableOpacity style={styles.inputPrefixIcon}>
-                <Icon name="emoji-emotions" size={25} color={Color.grayCloud} />
+                <Icon name="emoji-emotions" size={20} color={Color.grayCloud} />
               </TouchableOpacity>
               <TextInput
                 numberOfLines={3}
@@ -82,6 +117,12 @@ const Chatting = ({navigation, route}) => {
                 multiline={true}
                 placeholder="Message"
                 placeholderTextColor={'black'}
+                onChangeText={val => {
+                  if (val.length === 1) setIsText(true);
+                  else if (val.length < 1) setIsText(false);
+                  setMessage(val);
+                }}
+                value={message}
                 onFocus={e => {
                   console.log('focused');
                 }}
@@ -95,14 +136,21 @@ const Chatting = ({navigation, route}) => {
                 onPress={handleAttachmentModal}
                 activeOpacity={0.8}
                 style={styles.suffixIcon}>
-                <Icon name="attach-file" size={25} color={Color.grayCloud} />
+                <Icon name="attach-file" size={20} color={Color.grayCloud} />
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.8} style={styles.suffixIcon}>
-                <Icon name="camera-alt" size={25} color={Color.grayCloud} />
+                <Icon name="camera-alt" size={20} color={Color.grayCloud} />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity activeOpacity={0.8} style={styles.micContainer}>
-              <Icon name="mic" size={25} color="white" />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={sendMessage}
+              style={styles.micContainer}>
+              <Icon
+                name={isText ? 'send' : 'mic'}
+                size={isText ? 20 : 23}
+                color="white"
+              />
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -221,8 +269,12 @@ const styles = StyleSheet.create({
   },
   micContainer: {
     backgroundColor: Color.green,
-    borderRadius: 40,
-    padding: 9,
+    borderRadius: 50,
+    elevation: 3,
+    width: 43,
+    height: 43,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 5,
     // height:30,
     // width:30,

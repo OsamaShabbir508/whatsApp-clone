@@ -1,16 +1,17 @@
 import React from 'react';
 import {FlatList, ScrollView, Text, View, StyleSheet} from 'react-native';
 import Chat from '../components/Chat';
+import { Contacts } from '../dummy_data';
 
 const ChatScreen = (props) => {
- // console.log(props.navigation.navigate,'props');
+  const selectedUser= props.route.params;
   return (
     <View
       style={{
         flex: 1,
       }}>
       <FlatList
-        data={chat_List}
+        data={Contacts}
         renderItem={({index, item}) => (
           <Chat
             key={index}
@@ -18,7 +19,9 @@ const ChatScreen = (props) => {
             date={item.date}
             message={item.message}
             onPress={()=>props.navigation.navigate('Chatting',{
-              name:item.name
+              name:item.name,
+              item,
+              selectedUser
             })}
           />
         )}

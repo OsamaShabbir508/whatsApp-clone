@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  BackHandler,
 } from 'react-native';
 import {TabActions} from '@react-navigation/native';
 import Header from '../components/Header';
@@ -15,19 +14,18 @@ import Call from './Call';
 import Status from './Status';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {launchCamera} from 'react-native-image-picker';
-import Camera from './Camera';
-
 const Tab = createMaterialTopTabNavigator();
 const activeFloatingIcon = {
   Chats: 'chat',
   Status: 'photo-camera',
   Calls: 'add-call',
 };
-const Home = ({navigation}) => {
-  console.log('Home screen rendered');
+const Home = ({navigation,route}) => {
+  const {selectedUser}=route.params;
+
+  console.log('Home screen rendered',selectedUser);
   const [activeTab, setActiveTab] = useState('Chats');
   const handleFLoatingButtonPress = ({activeScreen}) => {
-    console.log(activeScreen);
     if (activeScreen === 'Chats') {
       navigation.navigate('Contacts');
     } else if (activeScreen === 'photo-camera') {
@@ -83,6 +81,7 @@ const Home = ({navigation}) => {
             }}
             name="chats"
             component={ChatScreen}
+            initialParams={selectedUser}
           />
           <Tab.Screen
             listeners={{
